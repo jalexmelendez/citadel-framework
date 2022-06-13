@@ -11,17 +11,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'build:dev',
-    description: 'Bulds the application for development.',
+    name: 'new:admin',
+    description: 'Creates a new administrator role.',
 )]
-class BuildDevCommand extends Command
+class NewAdminCommand extends Command
 {
     protected function configure(): void
     {
         $this
-            ->addArgument('apiclient', InputArgument::OPTIONAL, 'Adds all the dependencies to build the Api Platform admin and scaffolding tools.')
-            ->addOption('exclude-migration', null, InputOption::VALUE_NONE, 'Builds the application except the database migration.')
-            ->addOption('existing-db', null, InputOption::VALUE_NONE, 'Reverse engineers an existing database and builds the models and generates all the getters and setters for the application.')
+            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
+            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
