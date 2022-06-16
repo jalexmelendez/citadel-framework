@@ -14,7 +14,26 @@ This framework comes with EasyAdmin, an advanced tool to create administration b
 
 #### Where to modify?
 
-The route configuration is located on 
+The route and roles configuration is located on config/packages/security.yaml
+
+``` yaml
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # YOU CAN ADD AS MUCH FILTERS AS YOU WANT.
+        #- { path: ^/route, roles: [ROLE_USER] }
+        - { path: ^/admin, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
+        - { path: ^/dashboard, roles: [ROLE_STAFF, ROLE_USER] }
+
+
+```
+
+### TailwindCSS and daisyUI as default CSS framework
+
+TailwindCSS and daisyUI are installed in this distribution to speed up the process of creating interfaces,  you can find the configuration on tailwind.config.js, postcss.config.js and webpack.config.js.
+
+### Webpack Encore
 
 ### Login
 
@@ -34,7 +53,7 @@ The route configuration is located on
 
 ## Roadmap
 
-- [] Pending
+- [] Add a version that integrates OpenSwoole to make a high performace framework.
 
 ## Getting Started
 

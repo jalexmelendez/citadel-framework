@@ -14,6 +14,17 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
+    /**
+     * Tailwind CSS
+     */
+    .addStyleEntry('tailwind', './assets/styles/tailwind.css')
+    // enable post css loader
+    .enablePostCssLoader((options) => {
+        options.postcssOptions = {
+            config: './postcss.config.js'
+         };
+    })
+
     /*
      * ENTRY CONFIG
      *

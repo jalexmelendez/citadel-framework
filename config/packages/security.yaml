@@ -26,8 +26,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # YOU CAN ADD AS MUCH FILTERS AS YOU WANT.
+        #- { path: ^/route, roles: [ROLE_USER] }
+        - { path: ^/admin, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
+        - { path: ^/dashboard, roles: [ROLE_STAFF, ROLE_USER] }
 
 when@test:
     security:
