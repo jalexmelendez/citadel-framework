@@ -243,7 +243,7 @@ This minimal local server helps you to develop you app using a local server.
 
 user@machine:~Path/$ php bob serve
 
-``
+```
 
 ## Running the tests
 
