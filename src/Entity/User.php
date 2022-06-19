@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * The available user roles, feel free to extend this.
+     */
     public const USER_ROLES = [
         'SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
         'ADMIN' => 'ROLE_ADMIN',

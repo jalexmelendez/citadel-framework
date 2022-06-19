@@ -33,11 +33,61 @@ The route and roles configuration is located on config/packages/security.yaml
 
 TailwindCSS and daisyUI are installed in this distribution to speed up the process of creating interfaces,  you can find the configuration on tailwind.config.js, postcss.config.js and webpack.config.js.
 
-### Webpack Encore
+### Frontend asset compiler (Webpack Encore)
 
-### Login
+### Login and auth
+
+#### Web application
+
+The default credentials for login are email and password, the default user model has email and username enabled by default, to change the login dynamic by default you can alter this field with either username or email to allow users to login.
+
+``` yaml 
+
+    #config/packages/security.yaml
+
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+```
+
+And to change the login routes you can alter this configuration:
+
+``` yaml 
+
+    #config/packages/security.yaml
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: login
+                check_path: login
+                enable_csrf: true
+            logout:
+                path: logout
+
+
+```
+
+You can find the Login controller on
+
+#### REST Api and graphql
+
+By default and with scalability in mind the default auth mechanism is using JSON Web Token (JWT), which according to wikipedia and for simplicity's sake is a JSON-based open standard (RFC 7519) for creating access tokens that assert some number of claims. 
+
+PENDING DOCS
 
 ### Web profiler
+
+The Symfony's web profiler is enabled by default when the env is development.
 
 ### REST API
 
@@ -46,8 +96,6 @@ TailwindCSS and daisyUI are installed in this distribution to speed up the proce
 ### Template engine
 
 ### Realtime updates
-
-### Frontend asset compiler
 
 ### Automatic forms creation
 
