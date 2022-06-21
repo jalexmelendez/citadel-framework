@@ -41,6 +41,8 @@ TailwindCSS and daisyUI are installed in this distribution to speed up the proce
 
 The default credentials for login are email and password, the default user model has email and username enabled by default, to change the login dynamic by default you can alter this field with either username or email to allow users to login.
 
+The default route for the login page is "/login", after succesful login, the users with admin roles "ROLE_SUPER_ADMIN" and "ROLE_ADMIN" will be redirected to the admin dashboard, the other roles are redirected to "/dashboard".
+
 ``` yaml 
 
     #config/packages/security.yaml
