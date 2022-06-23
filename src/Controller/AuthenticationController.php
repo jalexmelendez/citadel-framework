@@ -18,7 +18,7 @@ class AuthenticationController extends AbstractController
         // In this case returns the email.
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('login/index.html.twig', [
+        return $this->render('authentication/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -36,6 +36,12 @@ class AuthenticationController extends AbstractController
         } else {
             return new RedirectResponse('/dashboard');
         }
+    }
+
+    #[Route('/register', name: 'register')]
+    public function register(): Response
+    {
+        return $this->render('authentication/register.html.twig', []);
     }
 
     #[Route('/logout', name: 'logout')]
