@@ -2,13 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -24,21 +30,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
+    #[Groups(['read', 'write'])]
     private $username;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups(['read', 'write'])]
     private $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['read', 'write'])]
     private $name;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(['read', 'write'])]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Groups(['read', 'write'])]
     private $password;
 
     public function getId(): ?int

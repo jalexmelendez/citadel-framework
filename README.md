@@ -2,6 +2,10 @@
 
 A CoC & easy to deploy framework for building robust and realtime web applications / API's (REST/GraphQL) built on top of Symfony and Mercure.
 
+## Versions
+
+* Pre-alpha: this version is currently under development, it is used on production in Rurusi and Cut developments.
+
 ## Parts of the framework
 
 This framework was visualized as an easy way to create a Monolithic application with all the features modern developers would want, feel free to use this to make in record time your MVP.

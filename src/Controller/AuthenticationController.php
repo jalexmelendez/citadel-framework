@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserRegistrationType;
+use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -39,9 +45,36 @@ class AuthenticationController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(): Response
+    public function register(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface): Response
     {
-        return $this->render('authentication/register.html.twig', []);
+        $user = new User();
+        $userWasSaved = false;
+        $error = null;
+        $registrationForm = $this->createForm(UserRegistrationType::class, $user);
+
+        $registrationForm->handleRequest($request);
+        if($registrationForm->isSubmitted() && $registrationForm->isValid()) {
+            $user = $registrationForm->getData();
+            $manager = $managerRegistry->getManager();
+
+            $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            
+            try {
+                $manager->persist($user);
+                $manager->flush();
+
+                $userWasSaved = true;
+            } catch(Exception $e) {
+                $error = 'A user exists with this credentials.';
+            }
+        }
+
+        return $this->renderForm('authentication/register.html.twig', [
+            'form' => $registrationForm,
+            'user_created' => $userWasSaved,
+            'error' => $error,
+        ]);
     }
 
     #[Route('/logout', name: 'logout')]
