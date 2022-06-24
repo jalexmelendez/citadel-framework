@@ -8,6 +8,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Hashes the password when a user has been created or updated.
+ */
 class AdminUserEvent implements EventSubscriberInterface
 {
     private $hasher;

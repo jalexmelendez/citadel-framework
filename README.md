@@ -41,6 +41,7 @@ TailwindCSS and daisyUI are installed in this distribution to speed up the proce
 
 ### Login and auth
 
+
 #### Web application
 
 The default credentials for login are email and password, the default user model has email and username enabled by default, to change the login dynamic by default you can alter this field with either username or email to allow users to login.
@@ -240,6 +241,24 @@ user@machine:~Path/$ composer install
 
 ```
 
+###### Generate keys
+
+App Secret
+
+``` cmd
+user@machine:~Path/$ php bin/console build:app-secret
+
+ ```
+
+
+JWT keys
+
+``` cmd 
+
+user@machine:~Path/$ php bin/console lexik:jwt:generate-keypair
+
+```
+
 ###### Generate the initial migration in the database
 
 ``` cmd
@@ -273,6 +292,7 @@ user@machine:~Path/$ php bob [COMMAND] [ARG?] [--OPTION?]
 | ------- | ----------- |
 | build:dev | builds the application for development. |
 | build:prod | builds the application for deployment. |
+| build:app-secret | creates a new APP_SECRET |
 | new:admin | generates a new user with admin role. |
 | serve | starts a minimal dev server. |
 

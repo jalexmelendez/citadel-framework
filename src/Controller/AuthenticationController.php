@@ -7,6 +7,7 @@ use App\Form\UserRegistrationType;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,5 +83,53 @@ class AuthenticationController extends AbstractController
     {
         // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
+    }
+
+    /**
+     * -----------------
+     * API AUTH ROUTES
+     * -----------------
+     */
+
+
+    #[Route('/api/authenticacion', name: 'app_api_authenticacion')]
+    public function apiAuthentication(): JsonResponse
+    {
+        return $this->json([
+            'message' => 'Welcome to your new controller!',
+            'path' => 'src/Controller/ApiAuthenticacionController.php',
+        ]);
+    }
+
+    #[Route('/api/users/register', name: 'app_api_register', methods: ['POST'])]
+    public function apiRegister(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface): JsonResponse
+    {
+        $data = json_decode($request->getContent());
+
+        $user = new User();
+
+        try {
+            $user->setUsername($data->username);
+            $user->setEmail($data->email);
+            $user->setPassword($data->password);
+            $user->setName($data->name);
+            $user->setRoles(['ROLE_USER']);
+        } catch (Exception $e) {
+            return $this->json([
+                'Created' => false,
+                'Error' => $e,
+            ]);
+        }
+        $manager = $managerRegistry->getManager();
+        
+        $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getPassword());
+        $user->setPassword($hashedPassword);
+
+        $manager->persist($user);
+        $manager->flush();
+
+        return $this->json([
+            'Created' => true
+        ]);
     }
 }

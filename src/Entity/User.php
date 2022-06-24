@@ -13,7 +13,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
     normalizationContext: ['groups' => ['read']],
-    denormalizationContext: ['groups' => ['write']]
+    denormalizationContext: ['groups' => ['write']],
+    collectionOperations: [
+        'get',
+        'register' => [
+            'method' => 'POST',
+            'route_name' => 'app_api_register'
+        ]
+    ],
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
