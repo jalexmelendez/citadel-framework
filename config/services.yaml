@@ -47,3 +47,7 @@ services:
                 # if it doesn't exist, it tries to execute the '__invoke()' method, but you can
                 # configure a custom method name with the 'method' option
                 # method: 'checkUserChanges'
+                
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner'] 

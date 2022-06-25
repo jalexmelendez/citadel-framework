@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
-    #[Groups(['read', 'write'])]
+    #[Groups(['write'])]
     private $password;
 
     public function getId(): ?int

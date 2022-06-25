@@ -86,11 +86,111 @@ And to change the login routes you can alter this configuration:
 
 You can find the Login controller on
 
-#### REST Api and graphql
+#### REST Api and graphql WEB AUTHENTICATION REQUIRED TO ACCESS THE DOCS
 
 By default and with scalability in mind the default auth mechanism is using JSON Web Token (JWT), which according to wikipedia and for simplicity's sake is a JSON-based open standard (RFC 7519) for creating access tokens that assert some number of claims. 
 
-PENDING DOCS
+First you will have to login on your app, then you can go to '/api' to read the openapi docs, to edit the configuration you can modify this parts of this files.
+
+To authenticate using JWT, first you will have to get a token in '/api/authentication_token', submit a post request like this or use the OpenAPI section to generate it.
+
+``` bash 
+
+#Curl
+
+curl -X 'POST' \
+  'http://localhost:8000/api/authentication_token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "johndoe@example.com",
+  "password": "apassword"
+}'
+
+#Request URL
+
+http://localhost:8000/api/authentication_token
+
+```
+
+
+``` yaml 
+
+# config/packages/api_platform.yaml
+
+api_platform:
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    swagger:
+        versions: [3]
+        api_keys:
+             apiKey:
+                name: Authorization
+                type: header
+```
+
+``` yaml 
+
+# config/packages/lexik_jwt_authentication.yaml
+lexik_jwt_authentication:
+    secret_key: '%env(resolve:JWT_SECRET_KEY)%'
+    public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
+    token_ttl: 3600
+    user_identity_field: email
+```
+
+``` yaml
+
+# config/services.yaml
+
+security:
+    # #
+    ##
+    firewalls:
+        dev:
+            ##
+            ##
+        api:
+            pattern: ^/api/
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /api/authentication_token
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
+        main:
+            ##
+            ##
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        ##
+        ##
+
+        # API
+        - { path: ^/api/users/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/authentication_token, roles: PUBLIC_ACCESS }
+        # List your protected routes like this.
+        - { path: ^/api, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_STAFF, ROLE_USER] }
+
+```
+
+``` yaml 
+
+#config/services.yaml
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner'] 
+
+```
+You can also modify the login documentation on src/OpenApi/JwtDecorator.php.
 
 ### Web profiler
 
@@ -98,7 +198,11 @@ The Symfony's web profiler is enabled by default when the env is development.
 
 ### REST API
 
+if your app instance is running go to /api, only authenticated users can access the docs!.
+
 ### GraphQL
+
+if your app instance is running go to /api.
 
 ### Template engine
 
@@ -272,6 +376,14 @@ user@machine:~Path/$ php bin/console doctrine:migrations:migrate
 ``` cmd
 
 user@machine:~Path/$ npm run dev
+
+```
+
+###### Create an admin user to access the admin dashboard
+
+``` cmd
+
+user@machine:~Path/$ php bob new:admin
 
 ```
 

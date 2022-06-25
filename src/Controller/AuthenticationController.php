@@ -86,20 +86,10 @@ class AuthenticationController extends AbstractController
     }
 
     /**
-     * -----------------
-     * API AUTH ROUTES
-     * -----------------
+     * --------------------
+     * API REGISTER ROUTE
+     * --------------------
      */
-
-
-    #[Route('/api/authenticacion', name: 'app_api_authenticacion')]
-    public function apiAuthentication(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ApiAuthenticacionController.php',
-        ]);
-    }
 
     #[Route('/api/users/register', name: 'app_api_register', methods: ['POST'])]
     public function apiRegister(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface): JsonResponse
