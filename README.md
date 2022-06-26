@@ -41,7 +41,6 @@ TailwindCSS and daisyUI are installed in this distribution to speed up the proce
 
 ### Login and auth
 
-
 #### Web application
 
 The default credentials for login are email and password, the default user model has email and username enabled by default, to change the login dynamic by default you can alter this field with either username or email to allow users to login.
@@ -206,13 +205,20 @@ if your app instance is running go to /api.
 
 ### Template engine
 
+By default Twig is included.
+
 ### Realtime updates
+
+API platform supports mercure, this enables you to make realtime API's.
 
 ### Automatic forms creation
 
+You can easily create forms with the included makerfile.
+
 ## Roadmap
 
-- [] Add a version that integrates OpenSwoole to make a high performace framework.
+- Add commands to setup the application framework.
+- Add a version that integrates OpenSwoole to make a high performace framework.
 
 ## Getting Started
 
@@ -314,7 +320,7 @@ Then before building your app, you need to add the configuration in the only mig
 
 ```
 
-##### Building using bob cli tool
+##### Building using bob cli tool UNDER DEVELOPMENT, PLEASE RUN THE MANUAL INSTALLATION PROCESS
 
 This framework comes with server database sessions for the web application and JWT auth for the REST API/GraphQL Api powered by Api platform, to build the app for development execute:
 
@@ -411,6 +417,7 @@ user@machine:~Path/$ php bob [COMMAND] [ARG?] [--OPTION?]
 
 ## Development server
 
+
 ### Symfony CLI server
 
 If you have the [Symfony CLI](https://symfony.com/doc/current/setup/symfony_server.html) installed, you can run:
@@ -433,7 +440,7 @@ user@machine:~Path/$ php bob serve
 
 ## Running the tests
 
-Pending
+Please read this [documentation](https://symfony.com/doc/current/testing.html)
 
 
 ### And coding style tests
@@ -480,6 +487,9 @@ This project comes with all the configuration needed to deploy it on shared host
 * [MakerBundle](https://symfony.com/bundles/SymfonyMakerBundle/current/index.html) - Symfony Maker helps you create empty commands, controllers, form classes, tests and more so you can forget about writing boilerplate code.
 * [EasyAdmin](https://symfony.com/bundles/EasyAdminBundle/current/index.html) - Creates beautiful administration backends for your Symfony applications. It's free, fast and fully documented.
 * [NPM](https://www.npmjs.com/) - JavaScript Package Manager, Registry & Website.
+
+## Complements
+
 * [Mercure](https://mercure.rocks/) - Mercure is an open protocol for real-time communications designed to be fast, reliable and battery-efficient.
 
 ## Contributing
