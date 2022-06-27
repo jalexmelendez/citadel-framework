@@ -373,6 +373,10 @@ user@machine:~Path/$ php bin/console lexik:jwt:generate-keypair
 
 ``` cmd
 
+# Make a migration first
+user@machine:~Path/$ php bin/console make:migration
+
+# Execute it
 user@machine:~Path/$ php bin/console doctrine:migrations:migrate
 
 ```
