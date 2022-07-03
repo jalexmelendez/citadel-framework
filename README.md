@@ -201,7 +201,22 @@ if your app instance is running go to /api, only authenticated users can access 
 
 ### GraphQL
 
-if your app instance is running go to /api.
+If you use an integer to query the data it will throw an error, this is because API platform id's are represented as an [IRI (Internationalized Resource Identifier)](https://www.w3.org/TR/ld-glossary/#internationalized-resource-identifier), to query data, the url prefix for the IRI must always be "/api/{resource}/{id?}".
+
+take for example this query to select the email and roles of a user, you can paste this query for you to test it! (after you created your account of course).
+
+``` graphql 
+
+query {
+  user(id: "api/users/1") {
+    email,
+    roles
+  }
+}
+
+```
+
+You can read more about it [here!](https://api-platform.com/docs/core/graphql/#queries).
 
 ### Template engine
 
